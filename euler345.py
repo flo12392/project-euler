@@ -14,15 +14,26 @@ mat = [re.sub(' +',',', x) for x in mat]
 mat = [x.split(',') for x in mat]
 mat = [[int(x) for x in rule] for rule in mat]
 
-# 3315
-mat = [[  7,  53, 183, 439, 863],
-[497, 383, 563,  79, 973],
-[287,  63, 343, 169, 583],
-[627, 343, 773, 959, 943],
-[767, 473, 103, 699, 303]]
 
-x = [[str(i) + str(j) for i in range(len(mat))] for j in range(len(mat))]
+x = [(i, j) for i in range(len(mat)) for j in range(len(mat))]
 
-prob = LpProblem("My problem", LpMinimize)
+prob = LpProblem("My problem", LpMaximize)
+x_vars = LpVariable.dicts("x",(range(len(mat)),range(len(mat))),0,1,'Integer')
 
-ingredient_vars = LpVariable.dicts("x",x,0,1,'Integer')
+# objective
+for i in range(len(mat)):
+    for j in range(len(mat)):
+        prob.objective += x_vars[i][j]*mat[i][j]
+
+for r in range(len(mat)):
+        prob += lpSum([x_vars[r][v]for v in range(len(mat))]) <= 1,""
+        
+for c in range(len(mat)):
+        prob += lpSum([x_vars[v][c]for v in range(len(mat))]) <= 1,""      
+        
+prob.solve()
+
+print("Status:" + pulp.LpStatus[prob.status])
+for v in prob.variables():
+    print(v.name + "=" + str(v.varValue))
+print("Total Cost =" + str(pulp.value(prob.objective)))
