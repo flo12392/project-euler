@@ -6,25 +6,26 @@ Created on Sat Aug 19 18:23:26 2017
 @author: florian
 """
 import numpy as np
+import copy
 
 global all_solutions
 all_solutions=[]
 
-def finish_ring(solution,total,selected,gon):
-    options_left = {1,2,3,4,5,6,7,8,9,10} - selected
-    if(gon==len(solution)-2):
+def finish_ring(solution,total,gon):
+    solution2 = copy.copy(solution)
+    options_left = {1,2,3,4,5,6,7,8,9,10} - set(np.unique(solution2))
+    if(gon==len(solution2)-2):
         for x in options_left:
-            if x + solution[gon][2] + solution[0][1] == total:
-                solution[gon+1] = [x,solution[gon][2],solution[0][1]]
-                all_solutions.append(solution)
+            if x + solution2[gon][2] + solution2[0][1] == total:
+                solution2[gon+1] = [x,solution2[gon][2],solution2[0][1]]
+                all_solutions.append(solution2)
     
     for x in options_left:
         for y in options_left:
             if x != y:
-                if(x+y+solution[gon][2]==total):
-                    solution[gon+1] = [x,solution[gon][2],y]
-                    solution = finish_ring(solution,total,selected.union({x,y}),gon=gon+1)
-    return(solution)
+                if(x+y+solution2[gon][2]==total):
+                    solution2[gon+1] = [x,solution2[gon][2],y]
+                    finish_ring(solution2,total,gon=gon+1)
                     
 
 for start in range(1,11):
@@ -33,10 +34,7 @@ for start in range(1,11):
             if x != y and y != start and x != start:
                 init_sol = [[start,x,y],[0,0,0],[0,0,0],[0,0,0],[0,0,0]]
                 total = sum(init_sol[0])
-                finish_ring(init_sol,total,selected={start,x,y},gon=0)
-
-print(all_solutions)
-
+                finish_ring(init_sol,total,gon=0)
 
 for z in range(len(all_solutions)):
     x = all_solutions[z]
@@ -55,7 +53,3 @@ for x in all_solutions:
         
 print(max_found)
 
-solution=[[1, 6, 10],[],[],[],[]]
-total = 17
-selected={1,6,10}
-gon=0
