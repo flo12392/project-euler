@@ -1,10 +1,11 @@
 import os
+import numpy as np
 
 abspath = os.path.abspath(__file__)
 dname = os.path.dirname(abspath)
 os.chdir(dname)
 
-a = list(open("euler79.txt"))
+a = list(open("data/euler79.txt"))
 rules = [x.rstrip('\n') for x in a]
 rules = [list(x) for x in rules]
 strip = 0

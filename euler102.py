@@ -19,7 +19,7 @@ bbPath = mplPath.Path(np.array([[poly[0], poly[1]],
 
 bbPath.contains_point((200, 100))
 
-a = list(open("euler102.txt"))
+a = list(open("data/euler102.txt"))
 mat = [x.rstrip('\n') for x in a]
 mat = [re.sub(' +',',', x) for x in mat]
 mat = [x.split(',') for x in mat]

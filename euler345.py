@@ -8,7 +8,7 @@ from pulp import *
 #dname = os.path.dirname(abspath)
 #os.chdir(dname)
 
-a = list(open("euler345.txt"))
+a = list(open("data/euler345.txt"))
 mat = [x.rstrip('\n') for x in a]
 mat = [re.sub(' +',',', x) for x in mat]
 mat = [x.split(',') for x in mat]

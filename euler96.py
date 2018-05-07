@@ -1,6 +1,6 @@
 from pulp import *
 
-a = list(open("euler96.txt"))
+a = list(open("data/euler96.txt"))
 mat = [x.rstrip('\n') for x in a]
 
 # read text file

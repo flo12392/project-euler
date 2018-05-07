@@ -49,7 +49,7 @@ def list_duplicates(seq):
 #'5040871491886523',
 
 
-a = list(open("euler185.txt"))
+a = list(open("data/euler185.txt"))
 mat = [x.rstrip('\n') for x in a]
 mat = [x.split(' ;') for x in mat]
 

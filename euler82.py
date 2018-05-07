@@ -5,7 +5,7 @@ import numpy as np
 #dname = os.path.dirname(abspath)
 #os.chdir(dname)
 
-a = list(open("euler82.txt"))
+a = list(open("data/euler82.txt"))
 mat = [x.rstrip('\n') for x in a]
 mat = [x.split(',') for x in mat]
 mat = [[int(x) for x in rule] for rule in mat]
